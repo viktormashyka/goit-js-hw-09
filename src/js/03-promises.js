@@ -59,9 +59,9 @@ function onSubmitHandler(event) {
   event.preventDefault();
   // const { delay, step, amount } = event.currentTarget;
 
-  let delayNum = +delayEl.value;
-  let stepNum = +stepEl.value;
-  let amountNum = +amountEl.value;
+  let delayNum = Number(delayEl.value);
+  let stepNum = Number(stepEl.value);
+  let amountNum = Number(amountEl.value);
 
   // const dataForm = new FormData(formRef);
   // console.log(dataForm.entries());

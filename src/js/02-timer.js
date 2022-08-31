@@ -154,9 +154,15 @@ function convertMs(ms) {
 }
 
 function startTimer() {
-  setInterval(() => {
+  startBtnRef.disabled = true;
+  const timerId = setInterval(() => {
     CURRENT_DAY = new Date().getTime();
     const deltaTime = SELECTED_DAY - CURRENT_DAY;
+    if (deltaTime <= 1000) {
+      clearInterval(timerId);
+      window.alert(`SALE! STARTED! SALE! STARTED!`);
+      return;
+    }
     const { days, hours, minutes, seconds } = convertMs(deltaTime);
     console.log(`${days}:${hours}:${minutes}:${seconds}`);
     updateClockface({ days, hours, minutes, seconds });
