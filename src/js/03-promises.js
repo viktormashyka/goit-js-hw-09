@@ -46,11 +46,64 @@
 
 // Для відображення повідомлень користувачеві, замість console.log(), використовуй бібліотеку notiflix.
 
-function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-  } else {
-    // Reject
+const formEl = document.querySelector('.form');
+// console.log(formRef);
+const buttonEl = document.querySelector('button');
+const delayEl = document.querySelector('input[name = delay]');
+const stepEl = document.querySelector('input[name = step]');
+const amountEl = document.querySelector('input[name = amount]');
+
+formEl.addEventListener('submit', onSubmitHandler);
+
+function onSubmitHandler(event) {
+  event.preventDefault();
+  // const { delay, step, amount } = event.currentTarget;
+
+  let delayNum = +delayEl.value;
+  let stepNum = +stepEl.value;
+  let amountNum = +amountEl.value;
+
+  // const dataForm = new FormData(formRef);
+  // console.log(dataForm.entries());
+  // const finalData = {};
+  // for (const [key, value] of dataForm.entries()) {
+  //   finalData[key] = Number[value];
+  // }
+  // formRef.reset();
+
+  console.log('delay.value', delayNum);
+  console.log('step value', stepNum);
+  console.log('amount value', amountNum);
+
+  if (amountNum <= 0) {
+    console.log(`❌ Bad amount. Try amount under 0`);
+    return;
+  }
+
+  for (let i = 1; i <= amountNum; i += 1) {
+    createPromise(i, delayNum)
+      .then(({ position, delay }) => {
+        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      })
+      .catch(({ position, delay }) => {
+        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+      });
+    delayNum += stepNum;
   }
 }
+
+function createPromise(position, delay) {
+  return new Promise((resolve, reject) => {
+    const shouldResolve = Math.random() > 0.3;
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
+  });
+}
+
+// event.currentTarget.reset();
+// const { delay, step, amount } = event.currentTarget;
