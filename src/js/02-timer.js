@@ -103,7 +103,7 @@ function startTimer() {
   const timerId = setInterval(() => {
     CURRENT_DAY = new Date().getTime();
     const deltaTime = SELECTED_DAY - CURRENT_DAY;
-    if (deltaTime <= 1000) {
+    if (deltaTime < 0) {
       clearInterval(timerId);
       window.alert(`SALE! STARTED! SALE! STARTED!`);
       return;
