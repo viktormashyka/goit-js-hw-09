@@ -13,6 +13,8 @@
 
 // Для відображення повідомлень користувачеві, замість console.log(), використовуй бібліотеку notiflix.
 
+import Notiflix from 'notiflix';
+
 const formEl = document.querySelector('.form');
 // console.log(formRef);
 const buttonEl = document.querySelector('button');
@@ -44,6 +46,7 @@ function onSubmitHandler(event) {
 
   if (amountNum <= 0) {
     console.log(`❌ Bad amount. Try amount under 0`);
+    Notiflix.Notify.info('❌ Bad amount. Try amount under 0');
     return;
   }
 
@@ -51,9 +54,15 @@ function onSubmitHandler(event) {
     createPromise(i, delayNum)
       .then(({ position, delay }) => {
         console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notiflix.Notify.success(
+          `✅ Fulfilled promise ${position} in ${delay}ms`
+        );
       })
       .catch(({ position, delay }) => {
         console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notiflix.Notify.failure(
+          `❌ Rejected promise ${position} in ${delay}ms`
+        );
       });
     delayNum += stepNum;
   }
